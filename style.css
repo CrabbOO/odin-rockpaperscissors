@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.result {
+    font-size: 25px;
+    margin: 1em;
+    background-color: brown;
+}
+
+.btn-container {
+    display: flex;
+    flex: 1;
+    margin: 1em;
+    gap: 1em;
+}
+
+.btn {
+    font-size: large;
+    flex: 1 auto;
+    height: 55px;
+}
+
+#rock {
+    background-color: aqua;
+}
+
+#paper {
+    background-color: blueviolet;
+}
+
+#scissors {
+    background-color: darkorange;
+}

@@ -11,51 +11,67 @@ function playRound(playerSelection, computerSelection) {
     scissors: "paper",
   };
 
-  if (playerSelection.toLowerCase() === computerSelection) {
+  if (playerSelection === computerSelection) {
+    resField.append(roundDraw);
     return 2;
   }
-
-  if (rules[playerSelection.toLowerCase()] === computerSelection) {
+  if (rules[playerSelection] === computerSelection) {
+    resField.append(playerWin);
+    score["player"]++;
     return 1;
   } else {
+    resField.append(computerWin);
+    score["computer"]++;
     return -1;
   }
 }
 
-function capitalize(word) {
-  return word.charAt(0).toUpperCase() + word.slice(1);
-}
+// Scoreboard
+let score = {
+  player: 0,
+  computer: 0,
+};
 
-function game() {
-  let score = {
-    player: 0,
-    computer: 0,
-  };
-
-  for (let i = 0; i < 5; i++) {
-    let playerChoice = prompt("Player's move: ");
-    let computerChoice = getComputerChoice();
-    let round = playRound(playerChoice, computerChoice);
-
-    if (round == 2) {
-      console.log("Draw!");
-    } else if (round == 1) {
-      console.log(
-        `You Win! ${capitalize(playerChoice)} beats ${capitalize(
-          computerChoice
-        )}`
-      );
-      score["player"]++;
-    } else {
-      console.log(
-        `You Lose! ${capitalize(computerChoice)} beats ${capitalize(
-          playerChoice
-        )}`
-      );
-      score["computer"]++;
-    }
+// Nullifying scoreboard after 5 points
+function checkScore() {
+  if (score["player"] === 5) {
+    resField.append(playerWinsGame);
+    score.player = 0;
+    score.computer = 0;
+  } else if (score["computer"] === 5) {
+    resField.append(computerWinsGame);
+    score.player = 0;
+    score.computer = 0;
   }
-  console.log(score);
 }
 
-game();
+const resField = document.querySelector(".result");
+const playerWinsGame = document.createElement("p");
+const computerWinsGame = document.createElement("p");
+const playerWin = document.createElement("p");
+const computerWin = document.createElement("p");
+const roundDraw = document.createElement("p");
+
+playerWinsGame.textContent = "Player is victorious!";
+computerWinsGame.textContent = "Computer is victorious!";
+playerWin.textContent = "Player wins.";
+computerWin.textContent = "Computer wins.";
+roundDraw.textContent = "Draw.";
+
+// Button selectors and listeners
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+
+rockBtn.addEventListener("click", () => {
+  playRound("rock", getComputerChoice());
+  checkScore();
+});
+paperBtn.addEventListener("click", () => {
+  playRound("paper", getComputerChoice());
+  checkScore();
+});
+scissorsBtn.addEventListener("click", () => {
+  playRound("scissors", getComputerChoice());
+  checkScore();
+});
